@@ -3,7 +3,7 @@ import React from "react";
 const Tabs = ({ todos,setTab }) => {
  const tabs=["All","Completed","Ongoing"];
   return (
-    <nav className="w-full  flex justify-center gap-10 text-xl mt-4">
+    <nav className="w-full  flex justify-center gap-4 text-xl mt-4 px-3">
       {tabs.map((tab, index) => {
         const numOfTasks =
           tab == "All"

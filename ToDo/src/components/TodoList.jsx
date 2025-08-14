@@ -9,7 +9,7 @@ const TodoList = ({ todos, tab, markComplete, deleteTodo }) => {
       : todos.filter((todo) => !todo.completed);
 
   return (
-    <div className="flex flex-wrap gap-15 mt-4 p-2 bg-amber-500">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 mt-4 p-2 bg-zinc-900 overflow-y-auto max-h-[62vh]">
       {filteredTodos.map((todo, index) => {
         return (
           <div key={index}>
