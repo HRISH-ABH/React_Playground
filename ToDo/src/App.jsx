@@ -3,8 +3,10 @@ import Header from "./components/Header";
 import Tabs from "./components/Tabs";
 import TodoList from "./components/TodoList";
 import TodoInput from "./components/TodoInput";
+import { toast } from "react-toastify";
 
 const App = () => {
+  
   const DEFAULT_TODOS = [
     { input: "Hello1 Add your first todo", completed: false },
   ];
@@ -25,6 +27,7 @@ const App = () => {
       index === idx ? { ...todo, completed: true } : todo
     );
     setTodos(updatedTodos);
+    toast.success("Task Completed!!");
   };
 
   const deleteTodo = (idx) => {
@@ -32,6 +35,7 @@ const App = () => {
       return index !== idx;
     });
     setTodos(newTodos);
+    toast.error("Task Deleted!!");
   };
 
   const tabHandler = (tab) => {
@@ -40,6 +44,7 @@ const App = () => {
   const addTodo = (todo) => {
     let updatedtodos = [...todos, { input: todo, completed: false }];
     setTodos(updatedtodos);
+   toast.success("Task Added!!");
   };
 
   useEffect(() => {
