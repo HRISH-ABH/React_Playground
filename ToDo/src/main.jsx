@@ -7,7 +7,7 @@ import { ToastContainer } from 'react-toastify'
 createRoot(document.getElementById('root')).render(
  <>
     <App />
-    <ToastContainer  position={window.innerWidth < 600 ? "bottom-center" : "top-right"}/>
+    <ToastContainer  position={window.innerWidth < 600 ? "bottom-center" : "top-right"} autoClose={1000}/>
  </>
 
 )
