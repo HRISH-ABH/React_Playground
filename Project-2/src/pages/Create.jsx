@@ -3,9 +3,11 @@ import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { recipeContext } from "../contexts/RecipeContext";
+import { useNavigate } from "react-router-dom";
 
 const Create = () => {
     const {recipes,setRecipes}=useContext(recipeContext);
+   const navigate= useNavigate();
   const {
     register,
     reset,
@@ -19,6 +21,7 @@ const Create = () => {
     setRecipes([...recipes,data]);
     toast.success("Recipe created successfully!");
     reset();
+    navigate("/recipes");
   };
   return (
     <div className="bg-zinc-900 max-w-3xl rounded-lg mx-auto mt-4 ">
