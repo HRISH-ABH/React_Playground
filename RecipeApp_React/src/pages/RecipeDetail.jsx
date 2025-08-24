@@ -1,19 +1,42 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { recipeContext } from "../contexts/RecipeContext";
 import { toast } from "react-toastify";
 import Modal from "../components/Modal";
 import { useForm } from "react-hook-form";
+import "remixicon/fonts/remixicon.css";
 
 const RecipeDetail = () => {
+  const [favorites, setFavorites] = useState(() => {
+    return JSON.parse(localStorage.getItem("favorites")) || [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+  }, [favorites]);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { id } = useParams();
   const navigate = useNavigate();
   const { recipes, setRecipes } = useContext(recipeContext);
   const recipe = recipes.find((recipe) => recipe.id === id);
 
+  const isFavorite = favorites.some((fav) => fav.id === recipe.id);
+
+  const toggleFavorite = () => {
+    setFavorites((prev) => {
+      const exists = prev.some((fav) => fav.id === recipe.id);
+      if (exists) {
+        return prev.filter((fav) => fav.id !== recipe.id);
+      } else {
+        return [...prev, recipe];
+      }
+    });
+    navigate("/favorites");
+  };
   const {
     register,
+
     handleSubmit,
     formState: { errors },
   } = useForm({
@@ -52,7 +75,7 @@ const RecipeDetail = () => {
 
   return (
     <div className="relative">
-            <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <form
           onSubmit={handleSubmit(updateRecipe)}
           className="flex flex-col gap-4"
@@ -136,8 +159,15 @@ const RecipeDetail = () => {
           </div>
         </form>
       </Modal>
-      <div className="max-w-4xl mx-auto p-4 mt-8">
+      <div className="max-w-4xl mx-auto p-4 mt-8 relative">
         <div className="bg-zinc-800 rounded-lg overflow-hidden shadow-xl">
+          <span className="absolute right-[3%] " onClick={toggleFavorite}>
+            {isFavorite ? (
+              <i className="ri-heart-fill text-2xl text-red-500"></i>
+            ) : (
+              <i className="ri-heart-line text-2xl"></i>
+            )}
+          </span>
           <div className="h-[400px] overflow-hidden">
             <img
               src={recipe.image}
@@ -171,7 +201,7 @@ const RecipeDetail = () => {
                 Back to Recipes
               </button>
               <button
-                onClick={() => setIsModalOpen(true)} 
+                onClick={() => setIsModalOpen(true)}
                 className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-800 transition-colors"
               >
                 Edit Recipe
@@ -186,8 +216,6 @@ const RecipeDetail = () => {
           </div>
         </div>
       </div>
-
-  
     </div>
   );
 };

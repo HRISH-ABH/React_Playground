@@ -8,6 +8,7 @@ const Navbar = () => {
       >Home</NavLink>
         <NavLink to="/create"className={({isActive}) => isActive ? "text-red-200" : "text-white"} >Create</NavLink>
         <NavLink to="/recipes" className={({isActive}) => isActive ? "text-red-200" : "text-white"}>Recipes</NavLink>
+        <NavLink end to="/favorites" className={({isActive}) => isActive ? "text-red-200" : "text-white" }>Favorites</NavLink>
     </div>
   )
 }

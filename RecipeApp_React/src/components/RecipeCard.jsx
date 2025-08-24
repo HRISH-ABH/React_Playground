@@ -1,9 +1,10 @@
-import React, { useContext } from 'react'
-import { recipeContext } from '../contexts/RecipeContext';
+
 import { Link } from 'react-router-dom';
 
-const RecipeCard = () => {
-  const {recipes,setRecipes}=  useContext(recipeContext);
+const RecipeCard = (props) => {
+  const recipes=props.recipes;
+  console.log(recipes);
+  
   return (
    <>
       {recipes.map((recipe)=>(
@@ -18,7 +19,7 @@ const RecipeCard = () => {
           <div className="p-4 flex flex-col flex-grow">
             <h3 className='text-xl font-bold text-white mb-2'>{recipe.title}</h3>
             <span className='text-sm font-semibold text-zinc-400 mb-2'>
-              {recipe.category.toUpperCase()}
+              {recipe.category}
             </span>
             <p className='text-zinc-300 text-sm line-clamp-3'>
               {recipe.description}
